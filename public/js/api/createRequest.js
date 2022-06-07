@@ -2,7 +2,7 @@
  * Основная функция для совершения запросов
  * на сервер.
  * */
-function dataForRequest(options) {
+function prepareDataForRequest(options) {
     let requestUrl = `${options.url}?`;
     if (options.method === 'GET') {
         for (key of Object.keys(options.data)) {
@@ -21,7 +21,7 @@ function dataForRequest(options) {
     }
     else {
         const requestUrl = `${options.url}`;
-        let FormData = require('form-data');  // заглушка для node.js
+        // let FormData = require('form-data');  // заглушка для node.js
         const formData = new FormData();
         for (key of Object.keys(options.data)) {
             formData.append(key, `${options.data[`${key}`]}`);
@@ -34,22 +34,47 @@ function dataForRequest(options) {
 }
 
 
-const createRequest = (options = {}) => {
+function createRequest(options) {
+    const dataForRequest = prepareDataForRequest(options);
+    // var XMLHttpRequest = require('xhr2');  // заглушка для node.js
     const xhr = new XMLHttpRequest;
-    xhr.open(`${options.method}`, dataForRequest(options).requestUrl);
-    xhr.send(dataForRequest(options).formData);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4) {
+            return options.callback(xhr.responseText);
+        }
+        else {
+            if (xhr.status != 200) {
+                return options.callback(xhr.responseText);
+            } else {
+                return options.callback(null, JSON.parse(xhr.responseText));
+            }
+        }
+    }
+
+    xhr.open(`${options.method}`, dataForRequest.requestUrl);
+    xhr.responseType = 'json';
+    xhr.send(dataForRequest.formData);
 };
 
 
 
-
-const options = {
-    url: 'https://example.com',
-    data: {
-      mail: 'ivan@biz.pro',
-      password: 'odinodin'
+// здесь перечислены все возможные параметры для функции
+createRequest({
+    url: 'https://example.com', // адрес
+    data: { // произвольные данные, могут отсутствовать
+        email: 'ivan@poselok.ru',
+        password: 'odinodin'
     },
-    method: 'GET',
-  };
-
-console.log(dataForRequest(options));
+    method: 'GET', // метод запроса
+    /*
+        Функция, которая сработает после запроса.
+        Если в процессе запроса произойдёт ошибка, её объект
+        должен быть в параметре err.
+        Если в запросе есть данные, они должны быть переданы в response.
+    */
+    callback: (err, response) => {
+        console.log( 'Ошибка =>', err );
+        console.log( 'Данные =>', response );
+    }
+});
