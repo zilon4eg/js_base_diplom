@@ -40,41 +40,40 @@ function createRequest(options) {
     const xhr = new XMLHttpRequest;
 
     xhr.onreadystatechange = function() {
-        if (xhr.readyState != 4) {
-            return options.callback(xhr.responseText);
-        }
-        else {
+        if (xhr.readyState === 4) {
             if (xhr.status != 200) {
-                return options.callback(xhr.responseText);
-            } else {
-                return options.callback(null, JSON.parse(xhr.responseText));
+                return options.callback(xhr.response);
+            }
+            else {
+                return options.callback(null, xhr.response);
             }
         }
     }
 
     xhr.open(`${options.method}`, dataForRequest.requestUrl);
     xhr.responseType = 'json';
+    xhr.withCredentials = true;
     xhr.send(dataForRequest.formData);
 };
 
 
 
 // здесь перечислены все возможные параметры для функции
-createRequest({
-    url: 'https://example.com', // адрес
-    data: { // произвольные данные, могут отсутствовать
-        email: 'ivan@poselok.ru',
-        password: 'odinodin'
-    },
-    method: 'GET', // метод запроса
-    /*
-        Функция, которая сработает после запроса.
-        Если в процессе запроса произойдёт ошибка, её объект
-        должен быть в параметре err.
-        Если в запросе есть данные, они должны быть переданы в response.
-    */
-    callback: (err, response) => {
-        console.log( 'Ошибка =>', err );
-        console.log( 'Данные =>', response );
-    }
-});
+// createRequest({
+//     url: '/user/current', // адрес https://example.com
+//     data: { // произвольные данные, могут отсутствовать
+//         email: 'ivan@poselok.ru',
+//         password: 'odinodin'
+//     },
+//     method: 'GET', // метод запроса
+//     /*
+//         Функция, которая сработает после запроса.
+//         Если в процессе запроса произойдёт ошибка, её объект
+//         должен быть в параметре err.
+//         Если в запросе есть данные, они должны быть переданы в response.
+//     */
+//     callback: (err, response) => {
+//         console.log( 'Ошибка =>', err );
+//         console.log( 'Данные =>', response );
+//     }
+// });
