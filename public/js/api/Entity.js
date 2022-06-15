@@ -12,7 +12,7 @@ class Entity {
 
     static list(data, callback){
         const dataForRequest = {
-            url: this.URL,
+            url: this.URL,  // может быть нужно передавать url: 'localhost:8000' ?
             data: data,
             method: 'GET',
             callback: callback,
