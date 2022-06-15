@@ -12,7 +12,7 @@ class Entity {
 
     static list(data, callback){
         const dataForRequest = {
-            url: this.URL,  // может быть нужно передавать url: 'localhost:8000' ?
+            url: `localhost:8000/${this.URL}`,  // может быть нужно передавать url: 'localhost:8000' ?
             data: data,
             method: 'GET',
             callback: callback,
@@ -28,7 +28,7 @@ class Entity {
      * */
     static create(data, callback) {
         const dataForRequest = {
-            url: this.URL,
+            url: `localhost:8000/${this.URL}`,
             data: data,
             method: 'PUT',
             callback: callback,
@@ -43,7 +43,7 @@ class Entity {
      * */
     static remove(data, callback ) {
         const dataForRequest = {
-            url: this.URL,
+            url: `localhost:8000/${this.URL}`,
             data: data,
             method: 'DELETE',
             callback: callback,
