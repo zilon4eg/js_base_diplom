@@ -60,10 +60,10 @@ function createRequest(options) {
 
 // здесь перечислены все возможные параметры для функции
 // createRequest({
-//     url: '/user/current', // адрес https://example.com
+//     url: '/user/current', // адрес https://example.com  (или /user/current)
 //     data: { // произвольные данные, могут отсутствовать
 //         email: 'ivan@poselok.ru',
-//         password: 'odinodin'
+//         password: 'odinodin',
 //     },
 //     method: 'GET', // метод запроса
 //     /*
