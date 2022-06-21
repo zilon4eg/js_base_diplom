@@ -3,32 +3,26 @@
  * на сервер.
  * */
 function prepareDataForRequest(options) {
-    let requestUrl = `${options.url}?`;
+    let reqUrl = options.url;
     if (options.method === 'GET') {
-        for (key of Object.keys(options.data)) {
-            if (key === 'email') {
-                requestUrl += '&mail=';
+        let reqParam = '';
+        if (Object.keys(options).includes('data')) {  // если ключ 'data' есть в объекте
+            for (key of Object.keys(options.data)) {
+                reqParam += `&${key}=${options.data[key]}`;
             }
-            else if (key === 'password') {
-                requestUrl += '&password=';
-            }
-            requestUrl += `${options.data[`${key}`]}`
         }
-        return {
-            'requestUrl': requestUrl.replace('?&', '?'),
-            'formData': null,
-        };
+        return {requestUrl: `${reqUrl}?${reqParam.substring(1)}`};
     }
     else {
-        const requestUrl = `${options.url}`;
+        const reqUrl = options.url;
         // let FormData = require('form-data');  // заглушка для node.js
         const formData = new FormData();
         for (key of Object.keys(options.data)) {
             formData.append(key, `${options.data[`${key}`]}`);
         }
         return {
-            'requestUrl': requestUrl,
-            'formData': formData,
+            requestUrl: reqUrl,
+            formData: formData,
         };
     }
 }
@@ -36,6 +30,7 @@ function prepareDataForRequest(options) {
 
 function createRequest(options) {
     const dataForRequest = prepareDataForRequest(options);
+    console.log(dataForRequest);
     // var XMLHttpRequest = require('xhr2');  // заглушка для node.js
     const xhr = new XMLHttpRequest;
 
@@ -50,10 +45,15 @@ function createRequest(options) {
         }
     }
 
-    xhr.open(`${options.method}`, dataForRequest.requestUrl);
+    xhr.open(options.method, dataForRequest.requestUrl);
     xhr.responseType = 'json';
     xhr.withCredentials = true;
-    xhr.send(dataForRequest.formData);
+    if (Object.keys(dataForRequest).includes('formData')) {
+        xhr.send(dataForRequest.formData);
+    }
+    else {
+        xhr.send();
+    }
 };
 
 

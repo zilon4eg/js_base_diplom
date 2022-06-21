@@ -40,15 +40,20 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    const user = this.current();
-
     const dataForRequest = {
-      url: `localhost:8000${this.URL}/current`,  // localhost:8000
+      url: `${this.URL}/current`,
       data: this.current(),
       method: 'GET',
-      callback: callback,
+      callback: (err, response) => {
+        if (response && response.success) {
+          this.setCurrent(response.user);
+        }
+        else {
+          this.unsetCurrent();
+        }
+        callback(err, response);
+      },
     }
-
     createRequest(dataForRequest, callback);
   }
 
@@ -99,6 +104,10 @@ const user = {
 };
 
 User.setCurrent(user);
-User.fetch(( err, response ) => {
+// User.fetch(( err, response ) => {
+//   console.log( err, response ); // 2
+// });
+
+User.login(( err, response ) => {
   console.log( err, response ); // 2
 });

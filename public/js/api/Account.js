@@ -11,7 +11,7 @@ class Account extends Entity {
 
     static get(id = '', callback){
         const dataForRequest = {
-            url: `localhost:8000/${this.URL}/${id}`,
+            url: `${this.URL}/${id}`,
             data: data,
             method: 'GET',
             callback: callback,
