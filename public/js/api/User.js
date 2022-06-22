@@ -54,7 +54,7 @@ class User {
         callback(err, response);
       },
     }
-    createRequest(dataForRequest, callback);
+    createRequest(dataForRequest, callback);  // РАСКОММЕНТИРОВАТЬ!
   }
 
   /**
@@ -74,7 +74,7 @@ class User {
           this.setCurrent(response.user);
         }
         callback(err, response);
-      }
+      },
     });
   }
 
@@ -85,7 +85,18 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
-
+    createRequest({
+      url: this.URL + '/register',
+      method: 'POST',
+      responseType: 'json',
+      data,
+      callback: (err, response) => {
+        if (response && response.user) {
+          this.setCurrent(response.user);
+        }
+        callback(err, response);
+      },
+    });
   }
 
   /**
@@ -93,21 +104,41 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
-
+    createRequest({
+      url: this.URL + '/logout',
+      method: 'POST',
+      responseType: 'json',
+      data,
+      callback: (err, response) => {
+        if (response && response.user) {
+          this.unsetCurrent();
+        }
+        callback(err, response);
+      },
+    });
   }
 }
 
 
-const user = {
-  id: 12,
-  name: 'Vlad'
-};
+// const user = {
+//   id: 12,
+//   name: 'Vlad'
+// };
 
-User.setCurrent(user);
+const data = {
+  email: 'test@test.ru',
+  password: 'abracadabra'
+}
+
+// User.setCurrent(user);
 // User.fetch(( err, response ) => {
 //   console.log( err, response ); // 2
 // });
 
-User.login(( err, response ) => {
+// User.register(data, ( err, response ) => {
+//   console.log( err, response ); // 2
+// });
+
+User.logout(( err, response ) => {
   console.log( err, response ); // 2
 });

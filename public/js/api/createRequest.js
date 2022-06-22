@@ -40,6 +40,7 @@ function createRequest(options) {
                 return options.callback(xhr.response);
             }
             else {
+                // console.log(xhr.response);
                 return options.callback(null, xhr.response);
             }
         }
