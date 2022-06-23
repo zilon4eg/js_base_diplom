@@ -7,8 +7,13 @@ function prepareDataForRequest(options) {
     if (options.method === 'GET') {
         let reqParam = '';
         if (Object.keys(options).includes('data')) {  // если ключ 'data' есть в объекте
-            for (key of Object.keys(options.data)) {
-                reqParam += `&${key}=${options.data[key]}`;
+            if (options.data != undefined) {
+                for (key of Object.keys(options.data)) {
+                    reqParam += `&${key}=${options.data[key]}`;
+                }
+            }
+            else {
+                return {requestUrl: reqUrl};
             }
         }
         return {requestUrl: `${reqUrl}?${reqParam.substring(1)}`};

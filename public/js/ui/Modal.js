@@ -45,3 +45,10 @@ class Modal {
 
   }
 }
+
+const test = document.querySelectorAll('button[data-dismiss="modal"]')
+
+console.log(test[0].className);
+test.forEach(element => {
+  element.style.display = 'block';
+});

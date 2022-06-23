@@ -125,10 +125,10 @@ class User {
 //   name: 'Vlad'
 // };
 
-const data = {
-  email: 'test@test.ru',
-  password: 'abracadabra'
-}
+// const data = {
+//   email: 'test@test.ru',
+//   password: 'abracadabra'
+// }
 
 // User.setCurrent(user);
 // User.fetch(( err, response ) => {
@@ -139,6 +139,6 @@ const data = {
 //   console.log( err, response ); // 2
 // });
 
-User.logout(( err, response ) => {
-  console.log( err, response ); // 2
-});
+// User.logout(( err, response ) => {
+//   console.log( err, response ); // 2
+// });
