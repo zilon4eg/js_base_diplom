@@ -37,11 +37,34 @@ class Sidebar {
   /**
    * При нажатии на кнопку входа, показывает окно входа
    * (через найденное в App.getModal)
-   * При нажатии на кнопку регастрации показывает окно регистрации
+   * При нажатии на кнопку регистрации показывает окно регистрации
    * При нажатии на кнопку выхода вызывает User.logout и по успешному
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
+    const registerForm = document.getElementById('modal-register')[0];
+    const registerBtn = registerForm.querySelector('.btn-primary');
+    registerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const window = App.getModal('#modal-register');
+      Modal.open(window);
+    });
 
+    const loginForm = document.getElementById('modal-login')[0];
+    const enterBtn = loginForm.querySelector('.btn-primary');
+    enterBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const window = App.getModal('#modal-login');
+      Modal.open(window);
+    });
+
+    const logoutBtn = document.querySelector('.menu-item_logout');
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const response = User.logout();
+      if (response.success) {
+        App.setState('init');
+      }
+    });
   }
 }
