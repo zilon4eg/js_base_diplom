@@ -42,20 +42,20 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-    const registerForm = document.getElementById('modal-register')[0];
-    const registerBtn = registerForm.querySelector('.btn-primary');
-    registerBtn.addEventListener('click', (e) => {
+    const menuItemRegister = document.querySelector('.menu-item_register');
+    menuItemRegister.addEventListener('click', (e) => {
       e.preventDefault();
-      const window = App.getModal('#modal-register');
-      Modal.open(window);
+      const window = App.getModal('register');
+      const modalWindow = new Modal(window.element);
+      modalWindow.open(window.element);
     });
 
-    const loginForm = document.getElementById('modal-login')[0];
-    const enterBtn = loginForm.querySelector('.btn-primary');
-    enterBtn.addEventListener('click', (e) => {
+    const menuItemLogin = document.querySelector('.menu-item_login');
+    menuItemLogin.addEventListener('click', (e) => {
       e.preventDefault();
-      const window = App.getModal('#modal-login');
-      Modal.open(window);
+      const window = App.getModal('login');
+      const modalWindow = new Modal(window.element);
+      modalWindow.open(window.element);
     });
 
     const logoutBtn = document.querySelector('.menu-item_logout');

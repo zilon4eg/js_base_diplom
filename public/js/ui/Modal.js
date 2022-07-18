@@ -13,7 +13,7 @@ class Modal {
    * */
   constructor(element){
     if (!element) {
-      alert('Переан пустой элемент!');
+      throw new Error('Передан пустой элемент!');
     } else {
       this.element = element;
       this.registerEvents();
@@ -26,10 +26,12 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    closeElement = this.element.querySelector('[data-dismiss="modal"]');
-    closeElement.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.onClose(closeElement);
+    const closeElements = this.element.querySelectorAll('[data-dismiss="modal"]');
+    closeElements.forEach(closeElement => {
+      closeElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.onClose(closeElement);
+      });
     });
   }
 

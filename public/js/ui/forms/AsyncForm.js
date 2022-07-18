@@ -14,7 +14,7 @@ class AsyncForm {
    * */
   constructor(element) {
     if (!element) {
-      alert('Переан пустой элемент!');
+      throw new Error('Переан пустой элемент!');
     } else {
       this.element = element;
       this.registerEvents();
@@ -43,7 +43,7 @@ class AsyncForm {
     const formObject = {};
     const formData = new FormData(this.element);
     for(let [name, value] of formData) {
-      formObject[name] = `${value}`;
+      formObject[name] = value;
     }
     return formObject;
   }

@@ -14,7 +14,13 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if (!element) {
+      throw new Error('Передан пустой элемент!');
+    } else {
+      this.element = element;
+      this.registerEvents();
+      this.update()
+    }
   }
 
   /**
@@ -25,7 +31,21 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+    const createAccount = document.querySelectorAll('.create-account');
+    createAccount.forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
 
+        const modalNewAccount = document.querySelector('#modal-new-account');
+        const modalWindow = new Modal(modalNewAccount);
+        modalWindow.open(modalNewAccount);
+      });      
+    });
+
+    const accounts = document.querySelectorAll('.account');
+    accounts.forEach(el => {
+      this.onSelectAccount(el);
+    });
   }
 
   /**
@@ -39,7 +59,13 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-
+    if (User.current()) {
+      const response = Account.list();
+      if (response && response.success === true) {
+        this.clear();
+        this.renderItem(response);
+      }
+    }
   }
 
   /**
@@ -48,7 +74,10 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-
+    const accounts = document.querySelectorAll('.account');
+    accounts.forEach(el => {
+      el.remove();
+    });
   }
 
   /**
@@ -58,8 +87,20 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount( element ) {
+  onSelectAccount(element) {
+    element.addEventListener('click', (e) => {
+      e.preventDefault();
 
+      const accounts = document.querySelectorAll('.account');
+      accounts.forEach(el => {
+        if (el.className.includes(active)) {
+          el.classList.remove('active');
+        }
+      });
+
+      el.classList.add('active');
+      App.showPage('transactions', {account_id: el.dataset.id});
+    });
   }
 
   /**
@@ -68,7 +109,18 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item){
-
+    
+    {
+      "id": 35,
+      "name": "Сбербанк",
+      "sum": 2396.30
+    }
+    <li class="active account" data-id="35">
+      <a href="#">
+        <span>Сбербанк</span> /
+        <span>2,396.30 ₽</span>
+      </a>
+    </li>
   }
 
   /**

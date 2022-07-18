@@ -35,7 +35,6 @@ function prepareDataForRequest(options) {
 
 function createRequest(options) {
     const dataForRequest = prepareDataForRequest(options);
-    console.log(dataForRequest);
     // var XMLHttpRequest = require('xhr2');  // заглушка для node.js
     const xhr = new XMLHttpRequest;
 

@@ -104,12 +104,14 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
+    const data = this.current();
     createRequest({
       url: this.URL + '/logout',
       method: 'POST',
       responseType: 'json',
       data,
       callback: (err, response) => {
+        console.log('response', response)
         if (response && response.user) {
           this.unsetCurrent();
         }
@@ -118,27 +120,3 @@ class User {
     });
   }
 }
-
-
-// const user = {
-//   id: 12,
-//   name: 'Vlad'
-// };
-
-// const data = {
-//   email: 'test@test.ru',
-//   password: 'abracadabra'
-// }
-
-// User.setCurrent(user);
-// User.fetch(( err, response ) => {
-//   console.log( err, response ); // 2
-// });
-
-// User.register(data, ( err, response ) => {
-//   console.log( err, response ); // 2
-// });
-
-// User.logout(( err, response ) => {
-//   console.log( err, response ); // 2
-// });
