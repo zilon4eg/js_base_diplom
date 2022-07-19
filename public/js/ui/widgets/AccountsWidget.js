@@ -109,18 +109,21 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item){
+    // const countForm = `<li class="account" data-id="${item.id}"><a href="#"><span>${item.name}</span><span>${item.sum} ₽</span></a></li>`
     
-    {
-      "id": 35,
-      "name": "Сбербанк",
-      "sum": 2396.30
-    }
-    <li class="active account" data-id="35">
-      <a href="#">
-        <span>Сбербанк</span> /
-        <span>2,396.30 ₽</span>
-      </a>
-    </li>
+    const countName = document.createElement('span');
+    countName.textContent = item.name;
+    const countSum = document.createElement('span');
+    countSum.textContent = `${item.sum} ₽`;
+    const countLink = document.createElement('a');
+    countLink.href = '#';
+    countLink.appendChild(countName);
+    countLink.appendChild(countSum);
+    const countForm = document.createElement('li');
+    countForm.className = 'account';
+    countForm.dataset.id = item.id;
+    countForm.appendChild(countLink);
+    return countForm;
   }
 
   /**
@@ -130,6 +133,7 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
-
+    console.log(data);
+    this.element = this.getAccountHTML(data);
   }
 }
