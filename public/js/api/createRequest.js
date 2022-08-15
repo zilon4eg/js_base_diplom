@@ -20,7 +20,6 @@ function prepareDataForRequest(options) {
     }
     else {
         const reqUrl = options.url;
-        // let FormData = require('form-data');  // заглушка для node.js
         const formData = new FormData();
         for (key of Object.keys(options.data)) {
             formData.append(key, `${options.data[`${key}`]}`);
@@ -35,7 +34,6 @@ function prepareDataForRequest(options) {
 
 function createRequest(options) {
     const dataForRequest = prepareDataForRequest(options);
-    // var XMLHttpRequest = require('xhr2');  // заглушка для node.js
     const xhr = new XMLHttpRequest;
 
     xhr.onreadystatechange = function() {
@@ -45,6 +43,7 @@ function createRequest(options) {
             }
             else {
                 // console.log(xhr.response);
+                console.log(options);
                 return options.callback(null, xhr.response);
             }
         }

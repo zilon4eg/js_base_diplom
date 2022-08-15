@@ -34,7 +34,7 @@ class Entity {
             callback: callback,
         }
 
-        createRequest(dataForRequest, callback);
+        createRequest(dataForRequest);
     }
 
     /**

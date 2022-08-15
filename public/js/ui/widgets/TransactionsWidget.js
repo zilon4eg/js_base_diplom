@@ -17,7 +17,6 @@ class TransactionsWidget {
     } else {
       this.element = element;
       this.registerEvents();
-      this.update()
     }
   }
   /**
@@ -27,16 +26,15 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
-    const incomeForm = document.getElementById('modal-new-income');
-    const incomeSumbitBtn = incomeForm.querySelector('btn-primary');
-    incomeSumbitBtn.addEventListener('click', (e) => {
-      Modal.open(this.element);
-    });
+    this.element.querySelectorAll('.btn').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if (el.classname.includes('create-income-button')) {
+          App.getModal('newIncome');
+        } else {
+          App.getModal('newExpense');
+        }
+      });
 
-    const expenseForm = document.getElementById('modal-new-expense');
-    const expenseSumbitBtn = expenseForm.querySelector('btn-primary');
-    expenseSumbitBtn.addEventListener('click', (e) => {
-      Modal.open(this.element);
     });
   }
 }

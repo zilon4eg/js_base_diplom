@@ -52,9 +52,9 @@ class User {
           this.unsetCurrent();
         }
         callback(err, response);
-      },
+      }
     }
-    createRequest(dataForRequest, callback);  // РАСКОММЕНТИРОВАТЬ!
+    createRequest(dataForRequest, callback);
   }
 
   /**
