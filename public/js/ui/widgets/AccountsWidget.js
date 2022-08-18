@@ -60,7 +60,8 @@ class AccountsWidget {
    * */
   update() {
     if (User.current()) {
-      const response = Account.list();
+      const data = User.fetch();
+      const response = Account.list(data, (err, response) => {});
       if (response && response.success === true) {
         this.clear();
         this.renderItem(response);

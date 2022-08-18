@@ -43,7 +43,7 @@ function createRequest(options) {
             }
             else {
                 // console.log(xhr.response);
-                console.log(options);
+                // console.log(options.callback);
                 return options.callback(null, xhr.response);
             }
         }

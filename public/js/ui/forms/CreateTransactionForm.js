@@ -19,10 +19,7 @@ class CreateTransactionForm extends AsyncForm {
   renderAccountsList() {
     const data = User.fetch();
     const countsList = Account.list(data, (err, response) => {});
-    // console.log(countsList);
-    const countListForm = document.getElementById('expense-accounts-list');
-    // console.log(countListForm);
-    // console.log(this.element);
+    this.element.reset();
     if (countsList) {
       countsList.forEach(el => {
         const count = document.createElement('option');
